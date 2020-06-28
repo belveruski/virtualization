@@ -25,8 +25,7 @@ sed -i.bak "s/data.status !== 'Active'/false/g" /usr/share/javascript/proxmox-wi
 echo [+] The subscription notice on the web panel was removed.
 
 # Fix Perl warning
-
 echo [+] Fixing Perl warning on your remote SSH terminal session
 sed -i 's/.*AcceptEnv LANG LC_\*.*/AcceptEnv LANG LC_PVE_* # Fix for perl: warning: Setting locale failed./' /etc/ssh/sshd_config
 service ssh reload
-echo [+] To fix the problem; exit; Reconnect to a new SSH terminal session
+echo [+] To fix the problem, reconnect to a new SSH terminal session.
