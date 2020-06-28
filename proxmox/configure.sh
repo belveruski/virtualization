@@ -9,6 +9,24 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Proxmox VE No-Subscription Repository
+echo [+] Removing the Proxmox VE Enterprise Repository...
 rm /etc/apt/sources.list.d/pve-enterprise.list
 cp -f sources.list /etc/apt/sources.list
 echo [+] Proxmox VE No-Subscription Repository was set
+
+# Update Proxmox VE
+echo [+] Updating Proxmox VE...
+apt-get update -qq && apt-get -qq -y full-upgrade
+echo [+] Promox VE is up to date.
+
+# Remove the subscription notice on the web panel
+echo [+] Removing the subscription notice on the web panel...
+sed -i.bak "s/data.status !== 'Active'/false/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js && systemctl restart pveproxy.service
+echo [+] The subscription notice on the web panel was removed.
+
+# Fix Perl warning
+
+echo [+] Fixing Perl warning on your remote SSH terminal session
+sed -i 's/.*AcceptEnv LANG LC_\*.*/AcceptEnv LANG LC_PVE_* # Fix for perl: warning: Setting locale failed./' /etc/ssh/sshd_config
+service ssh reload
+echo [+] To fix the problem; exit; Reconnect to a new SSH terminal session
