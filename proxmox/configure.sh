@@ -1,22 +1,30 @@
 #!/bin/bash
 
+export DEBIAN_FRONTEND=noninteractive
+
 # Script to configure Proxmox VE
 
 # Check if the script being run as root
 if [[ $EUID -ne 0 ]]; then
-   echo "[-] This script must be run as root" 
-   exit 1
+    echo "[-] This script must be run as root"
+    exit 1
 fi
 
 # Proxmox VE No-Subscription Repository
 echo [+] Removing the Proxmox VE Enterprise Repository...
-rm /etc/apt/sources.list.d/pve-enterprise.list
-cp -f sources.list /etc/apt/sources.list
-echo [+] Proxmox VE No-Subscription Repository was set
+ls /etc/apt/sources.list.d/pve-enterprise.list &> /dev/null
+if [ $? -ne 0 ]
+then
+    echo [+] Proxmox VE No-Subscription Repository was already set.
+else
+    rm /etc/apt/sources.list.d/pve-enterprise.list
+    cp -f sources.list /etc/apt/sources.list
+    echo [+] Proxmox VE No-Subscription Repository was set.
+fi
 
 # Update Proxmox VE
 echo [+] Updating Proxmox VE...
-apt-get update -qq && apt-get -qq -y full-upgrade
+apt-get update -qq && apt-get -qq -y full-upgrade &>/dev/null
 echo [+] Promox VE is up to date.
 
 # Remove the subscription notice on the web panel
