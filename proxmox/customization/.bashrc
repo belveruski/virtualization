@@ -82,7 +82,7 @@ alias hops='mtr -T'
 alias nhops='mtr -n -T'
 
 # Vim
-alias vi=vim
+alias vi='vim'
 alias svi='sudo vi'
 alias edit='vim'
 

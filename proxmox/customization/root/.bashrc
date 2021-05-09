@@ -39,10 +39,10 @@ apt-get autoremove -y &&
 }
 
 # Reboot / Halt / Poweroff
-alias reboot=' reboot'
-alias poweroff=' poweroff'
+alias reboot='reboot'
+alias poweroff='poweroff'
 alias halt='halt'
-alias shutdown'shutdown'
+alias shutdown='shutdown'
 
 # Remove files or directories
 alias rm='rm -rv'
@@ -82,7 +82,7 @@ alias hops='mtr -T'
 alias nhops='mtr -n -T'
 
 # Vim
-alias vi=vim
+alias vi='vim'
 alias svi='vi'
 alias edit='vim'
 
